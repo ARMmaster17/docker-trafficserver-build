@@ -12,14 +12,6 @@ Source0:       %{name}-%{version}-%{epoch}.tar.bz2
 %undefine _disable_source_fetch
 #Source0:        https://github.com/apache/trafficserver/archive/refs/tags/9.1.2.tar.gz
 #Source1:        trafficserver.service
-Source2:        trafficserver.sysconfig
-Source3:        trafficserver.tmpfilesd
-Source4:        trafficserver-rsyslog.conf
-Patch0:         astats_over_http-1.6-9.1.x.patch
-Patch1:         https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/7916.patch
-Patch2:         https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/8589.patch
-Patch3:         https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/8362.patch
-Patch4:         https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/8480.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 Requires:	tcl, hwloc, pcre, openssl, libcap
 Requires:       rsyslog
@@ -43,11 +35,6 @@ Apache Traffic Server for Traffic Control with astats_over_http plugin
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 autoreconf -vfi
 
 #%setup
@@ -65,11 +52,11 @@ make DESTDIR=%{buildroot} install
 ##rm -rf %{buildroot}%{_docdir}/trafficserver
 
 mkdir -p %{buildroot}%{_sysconfdir}/sysconfig
-install -m 644 -p %{SOURCE2} \
+install -m 644 -p %{SOURCE0}/trafficserver.sysconfig \
    %{buildroot}%{_sysconfdir}/sysconfig/trafficserver
 
 mkdir -p %{buildroot}%{_sysconfdir}/rsyslog.d
-install -m 644 -p %{SOURCE4} \
+install -m 644 -p %{SOURCE0}/trafficserver \
    %{buildroot}%{_sysconfdir}/rsyslog.d/trafficserver.conf
 
 #%{__install} -Dm 0644 trafficserver-rsyslog.conf $RPM_BUILD_ROOT/etc/rsyslog.d/trafficserver.conf
@@ -79,7 +66,7 @@ install -m 644 -p %{SOURCE4} \
 #   %{buildroot}/lib/systemd/system/trafficserver.service
 mkdir -p %{buildroot}%{_unitdir}/
 cp $RPM_BUILD_DIR/%{name}-%{version}/rc/trafficserver.service %{buildroot}%{_unitdir}/
-install -D -m 0644 -p %{SOURCE3} \
+install -D -m 0644 -p %{SOURCE0}/trafficserver.tmpfilesd \
    %{buildroot}%{_sysconfdir}/tmpfiles.d/trafficserver.conf
 %else
 mkdir -p %{buildroot}/etc/init.d/
