@@ -59,6 +59,10 @@ make %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
+echo "==================================="
+pwd
+ls -al
+echo "==================================="
 make DESTDIR=%{buildroot} install
 
 # Remove duplicate man-pages:
