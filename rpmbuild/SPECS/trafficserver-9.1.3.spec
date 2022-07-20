@@ -15,7 +15,7 @@ Source0:       %{name}-%{version}-%{epoch}.tar.bz2
 Source2:        trafficserver.sysconfig
 Source3:        trafficserver.tmpfilesd
 Source4:        trafficserver-rsyslog.conf
-Patch0:         astats_over_http-1.6-9.1.x.patch
+#Patch0:         astats_over_http-1.6-9.1.x.patch
 #Patch1:         https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/7916.patch
 #Patch2:         https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/8589.patch
 #Patch3:         https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/8362.patch
@@ -43,7 +43,7 @@ Apache Traffic Server for Traffic Control with astats_over_http plugin
 
 %prep
 %setup
-%patch0 -p1
+#%patch0 -p1
 #%patch1 -p1
 #%patch2 -p1
 #%patch3 -p1
