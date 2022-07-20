@@ -59,31 +59,27 @@ make %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
-echo "==================================="
-pwd
-ls -al
-echo "==================================="
 make DESTDIR=%{buildroot} install
 
 # Remove duplicate man-pages:
 ##rm -rf %{buildroot}%{_docdir}/trafficserver
 
 mkdir -p %{buildroot}%{_sysconfdir}/sysconfig
-install -m 644 -p $RPM_BUILD_DIR/%{name}-%{version}/trafficserver.sysconfig \
+install -m 644 -p trafficserver.sysconfig \
    %{buildroot}%{_sysconfdir}/sysconfig/trafficserver
 
 mkdir -p %{buildroot}%{_sysconfdir}/rsyslog.d
-install -m 644 -p $RPM_BUILD_DIR/%{name}-%{version}/trafficserver-rsyslog.conf \
+install -m 644 -p trafficserver-rsyslog.conf \
    %{buildroot}%{_sysconfdir}/rsyslog.d/trafficserver.conf
 
 #%{__install} -Dm 0644 trafficserver-rsyslog.conf $RPM_BUILD_ROOT/etc/rsyslog.d/trafficserver.conf
 
 %if %{?fedora}0 > 140 || %{?rhel}0 > 60
-#install -D -m 0644 -p $RPM_BUILD_DIR/%{name}-%{version}/trafficserver.service \
+#install -D -m 0644 -p trafficserver.service \
 #   %{buildroot}/lib/systemd/system/trafficserver.service
 mkdir -p %{buildroot}%{_unitdir}/
 cp $RPM_BUILD_DIR/%{name}-%{version}/rc/trafficserver.service %{buildroot}%{_unitdir}/
-install -D -m 0644 -p $RPM_BUILD_DIR/%{name}-%{version}/trafficserver.tempfilesd \
+install -D -m 0644 -p trafficserver.tempfilesd \
    %{buildroot}%{_sysconfdir}/tmpfiles.d/trafficserver.conf
 %else
 mkdir -p %{buildroot}/etc/init.d/
