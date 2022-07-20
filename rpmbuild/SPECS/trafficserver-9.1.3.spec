@@ -2,7 +2,7 @@
 
 Name:		trafficserver
 Version:	9.1.3
-Release:	13496%{?dist}
+Release:	%(echo $TS_EPOCH)
 Summary:	Apache Traffic Server
 Group:		Applications/Communications
 License:	Apache License, Version 2.0
@@ -65,21 +65,21 @@ make DESTDIR=%{buildroot} install
 ##rm -rf %{buildroot}%{_docdir}/trafficserver
 
 mkdir -p %{buildroot}%{_sysconfdir}/sysconfig
-install -m 644 -p %{SOURCE0}/trafficserver.sysconfig \
+install -m 644 -p $RPM_BUILD_DIR/%{name}-%{version}/trafficserver.sysconfig \
    %{buildroot}%{_sysconfdir}/sysconfig/trafficserver
 
 mkdir -p %{buildroot}%{_sysconfdir}/rsyslog.d
-install -m 644 -p %{SOURCE0}/trafficserver-rsyslog.conf \
+install -m 644 -p $RPM_BUILD_DIR/%{name}-%{version}/trafficserver-rsyslog.conf \
    %{buildroot}%{_sysconfdir}/rsyslog.d/trafficserver.conf
 
 #%{__install} -Dm 0644 trafficserver-rsyslog.conf $RPM_BUILD_ROOT/etc/rsyslog.d/trafficserver.conf
 
 %if %{?fedora}0 > 140 || %{?rhel}0 > 60
-#install -D -m 0644 -p %{SOURCE0}/trafficserver.service \
+#install -D -m 0644 -p $RPM_BUILD_DIR/%{name}-%{version}/trafficserver.service \
 #   %{buildroot}/lib/systemd/system/trafficserver.service
 mkdir -p %{buildroot}%{_unitdir}/
 cp $RPM_BUILD_DIR/%{name}-%{version}/rc/trafficserver.service %{buildroot}%{_unitdir}/
-install -D -m 0644 -p %{SOURCE0}/trafficserver.tempfilesd \
+install -D -m 0644 -p $RPM_BUILD_DIR/%{name}-%{version}/trafficserver.tempfilesd \
    %{buildroot}%{_sysconfdir}/tmpfiles.d/trafficserver.conf
 %else
 mkdir -p %{buildroot}/etc/init.d/
