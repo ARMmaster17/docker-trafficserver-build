@@ -7,7 +7,7 @@ Summary:	Apache Traffic Server
 Group:		Applications/Communications
 License:	Apache License, Version 2.0
 URL:		https://github.com/apache/trafficserver
-Epoch:          13496
+Epoch:          %(echo $TS_EPOCH)
 Source0:       %{name}-%{version}-%{epoch}.tar.bz2
 %undefine _disable_source_fetch
 #Source0:        https://github.com/apache/trafficserver/archive/refs/tags/9.1.2.tar.gz
