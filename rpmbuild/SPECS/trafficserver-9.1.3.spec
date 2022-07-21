@@ -79,7 +79,7 @@ install -m 644 -p trafficserver-rsyslog.conf \
 #   %{buildroot}/lib/systemd/system/trafficserver.service
 mkdir -p %{buildroot}%{_unitdir}/
 cp $RPM_BUILD_DIR/%{name}-%{version}/rc/trafficserver.service %{buildroot}%{_unitdir}/
-install -D -m 0644 -p trafficserver.tempfilesd \
+install -D -m 0644 -p trafficserver.tmpfilesd \
    %{buildroot}%{_sysconfdir}/tmpfiles.d/trafficserver.conf
 %else
 mkdir -p %{buildroot}/etc/init.d/
