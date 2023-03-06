@@ -8,14 +8,18 @@ Group:		Applications/Communications
 License:	Apache License, Version 2.0
 URL:		https://github.com/apache/trafficserver
 Epoch:          13890
-Source0:        %{name}-%{version}-%{epoch}.tar.bz2
+#Source0:        %{name}-%{version}-%{epoch}.tar.bz2
 %undefine _disable_source_fetch
-#Source0:        https://github.com/apache/trafficserver/archive/refs/tags/9.1.2.tar.gz
+Source0:        https://github.com/apache/trafficserver/archive/refs/tags/9.2.0.tar.gz
 #Source1:        trafficserver.service
 Source2:        trafficserver.sysconfig
 Source3:        trafficserver.tmpfilesd
 Source4:        trafficserver-rsyslog.conf
-Patch0:         astats_over_http-1.6-9.1.x.patch
+# Use Crypto Policies where supported
+%if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
+Patch0:         trafficserver-crypto-policy.patch
+%endif
+Patch1:         astats_over_http-1.6-9.1.x.patch
 #Patch1:         7916.patch
 #Patch2:         8589.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
@@ -46,7 +50,7 @@ rm -rf %{name}-%{version}
 #%setup -D -n %{name} -T
 %setup
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 #%patch2 -p1
 autoreconf -vfi
 
@@ -54,7 +58,16 @@ autoreconf -vfi
 
 %build
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/trafficserver/openssl/lib:/usr/local/lib
-./configure --prefix=%{install_prefix}/%{name} --with-user=ats --with-group=ats --with-build-number=%{release} --enable-experimental-plugins --with-jansson=/jansson --with-cjose=/cjose -with-openssl=/opt/trafficserver/openssl --disable-unwind
+#./configure --prefix=%{install_prefix}/%{name} --with-user=ats --with-group=ats --with-build-number=%{release} --enable-experimental-plugins --with-jansson=/jansson --with-cjose=/cjose -with-openssl=/opt/trafficserver/openssl --disable-unwind
+%configure \
+  --enable-layout=RedHat \
+  --sysconfdir=%{_sysconfdir}/%{name} \
+  --libdir=%{_libdir}/%{name} \
+  --libexecdir=%{_libdir}/%{name}/plugins \
+  --enable-experimental-plugins \
+  --with-user=trafficserver --with-group=trafficserver \
+  --with-jansson \
+  --with-cjose
 make %{?_smp_mflags}
 
 %install
