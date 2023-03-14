@@ -72,7 +72,7 @@ chmod +x ./configure
 make %{?_smp_mflags}
 
 %install
-rm -rf %{buildroot}
+#rm -rf %{buildroot}
 make DESTDIR=%{buildroot} install
 
 # Remove duplicate man-pages:
