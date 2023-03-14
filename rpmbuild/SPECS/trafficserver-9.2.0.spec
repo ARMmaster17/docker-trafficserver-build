@@ -72,7 +72,7 @@ chmod +x ./configure
 make %{?_smp_mflags}
 
 %install
-#rm -rf %{buildroot}
+rm -rf %{buildroot}
 make DESTDIR=%{buildroot} install
 
 # Remove duplicate man-pages:
@@ -158,45 +158,45 @@ fi
 %files
 %defattr(-,root,root)
 #%attr(755,-,-) /etc/init.d/trafficserver
-%dir /opt/trafficserver
+%dir opt/trafficserver
 %if %{?fedora}0 > 140 || %{?rhel}0 > 60
-/usr/lib/systemd/system/trafficserver.service
+usr/lib/systemd/system/trafficserver.service
 %config(noreplace) %{_sysconfdir}/tmpfiles.d/trafficserver.conf
 %else
-/etc/init.d/trafficserver
+etc/init.d/trafficserver
 %endif
-/opt/trafficserver/openssl
-/opt/trafficserver/bin
+opt/trafficserver/openssl
+opt/trafficserver/bin
 %config(noreplace) %{_sysconfdir}/sysconfig/trafficserver
 %{_sysconfdir}/rsyslog.d/trafficserver.conf
-/opt/trafficserver/include
-/opt/trafficserver/lib
+opt/trafficserver/include
+opt/trafficserver/lib
 #/opt/trafficserver/man
 #/opt/trafficserver/lib64
-/opt/trafficserver/libexec
-/opt/trafficserver/share
-%dir /opt/trafficserver/var
-%attr(-,ats,ats) /opt/trafficserver/var/trafficserver
-%dir /opt/trafficserver/var/log
-%attr(-,ats,ats) /opt/trafficserver/var/log/trafficserver
-%dir /opt/trafficserver/etc
-%attr(-,ats,ats) %dir /opt/trafficserver/etc/trafficserver
-%attr(-,ats,ats) %dir /opt/trafficserver/etc/trafficserver/snapshots
-/opt/trafficserver/etc/trafficserver/body_factory
-/opt/trafficserver/etc/trafficserver/trafficserver-release
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/cache.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/hosting.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/ip_allow.yaml
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/logging.yaml
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/parent.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/plugin.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/records.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/remap.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/socks.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/splitdns.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/ssl_multicert.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/storage.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/update.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/volume.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/sni.yaml
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/strategies.yaml
+opt/trafficserver/libexec
+opt/trafficserver/share
+%dir opt/trafficserver/var
+%attr(-,ats,ats) opt/trafficserver/var/trafficserver
+%dir opt/trafficserver/var/log
+%attr(-,ats,ats) opt/trafficserver/var/log/trafficserver
+%dir opt/trafficserver/etc
+%attr(-,ats,ats) %dir opt/trafficserver/etc/trafficserver
+%attr(-,ats,ats) %dir opt/trafficserver/etc/trafficserver/snapshots
+opt/trafficserver/etc/trafficserver/body_factory
+opt/trafficserver/etc/trafficserver/trafficserver-release
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/cache.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/hosting.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/ip_allow.yaml
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/logging.yaml
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/parent.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/plugin.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/records.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/remap.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/socks.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/splitdns.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/ssl_multicert.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/storage.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/update.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/volume.config
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/sni.yaml
+%config(noreplace) %attr(644,ats,ats) opt/trafficserver/etc/trafficserver/strategies.yaml
