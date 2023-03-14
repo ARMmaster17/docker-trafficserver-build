@@ -7,7 +7,7 @@ RUN dnf install -y --setopt=tsflags=nodocs \
                 git autoconf automake libtool gcc gcc-c++ \
                 pkgconfig pcre-devel tcl-devel expat-devel openssl-devel \
                 libcap python3 libcap-devel hwloc hwloc-devel libcurl-devel rpm-build perl-ExtUtils-MakeMaker luajit-devel \
-                make sudo \
+                make sudo wget \
                 && yum clean all
 RUN dnf --enablerepo=devel install -y cjose-devel jansson-devel && yum clean all
 
