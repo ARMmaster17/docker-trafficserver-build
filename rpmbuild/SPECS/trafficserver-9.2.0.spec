@@ -70,11 +70,11 @@ chmod +x ./configure
   --with-user=ats --with-group=ats \
   --with-build-number=%{release} \
   --disable-unwind
-make -Sd %{?_smp_mflags}
+make -S %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
-make -Sd DESTDIR=%{buildroot} install
+make -S DESTDIR=%{buildroot} install
 
 # Remove duplicate man-pages:
 ##rm -rf %{buildroot}%{_docdir}/trafficserver
