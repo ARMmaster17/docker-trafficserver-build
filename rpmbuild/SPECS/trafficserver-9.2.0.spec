@@ -44,7 +44,7 @@ Requires(postun): initscripts
 Apache Traffic Server for Traffic Control with astats_over_http plugin
 
 %prep
-#rm -rf %{name}-%{version}
+rm -rf %{name}-%{version}
 #git clone -b %{version} https://github.com/apache/trafficserver.git %{name}-%{version}
 
 #%setup -D -n %{name} -T
@@ -197,7 +197,7 @@ fi
 %config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/splitdns.config
 %config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/ssl_multicert.config
 %config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/storage.config
-%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/update.config
+#%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/update.config
 %config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/volume.config
 %config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/sni.yaml
 %config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/strategies.yaml
