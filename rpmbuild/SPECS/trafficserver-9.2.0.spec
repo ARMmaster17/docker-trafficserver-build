@@ -9,8 +9,7 @@ License:	Apache License, Version 2.0
 URL:		https://github.com/apache/trafficserver
 Epoch:          13890
 %undefine _disable_source_fetch
-# Source0:        https://github.com/apache/trafficserver/archive/refs/tags/9.2.0.tar.gz
-Source0:        %{name}-%{version}-%{epoch}.tar.bz2
+Source0:        https://github.com/apache/trafficserver/archive/refs/tags/9.2.0.tar.gz
 #Source1:        trafficserver.service
 Source2:        trafficserver.sysconfig
 Source3:        trafficserver.tmpfilesd
@@ -26,7 +25,8 @@ BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 Requires:	tcl, hwloc, pcre, openssl, libcap
 Requires:       rsyslog
 Requires:       logrotate
-BuildRequires:	autoconf, automake, libtool, gcc-c++, glibc-devel, openssl-devel, expat-devel, pcre, libcap-devel, pcre-devel, perl-ExtUtils-MakeMaker, tcl-devel, hwloc-devel, luajit-devel
+Requires:       expat, hwloc, pcre, xz, ncurses, pkgconfig
+BuildRequires:	autoconf, automake, libtool, gcc-c++, glibc-devel, openssl-devel, expat-devel, pcre, libcap-devel, pcre-devel, perl-ExtUtils-MakeMaker, tcl-devel, hwloc-devel, luajit-devel,
 
 Requires: initscripts
 %if %{?fedora}0 > 140 || %{?rhel}0 > 60
@@ -58,7 +58,7 @@ autoreconf -vfi
 #%setup
 
 %build
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/trafficserver/openssl/lib:/usr/local/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 #./configure --prefix=%{install_prefix}/%{name} --with-user=ats --with-group=ats --with-build-number=%{release} --enable-experimental-plugins --with-jansson=/jansson --with-cjose=/cjose -with-openssl=/opt/trafficserver/openssl --disable-unwind
 chmod +x ./configure
 %configure \
@@ -67,9 +67,8 @@ chmod +x ./configure
   --libdir=%{_libdir}/%{name} \
   --libexecdir=%{_libdir}/%{name}/plugins \
   --enable-experimental-plugins \
-  --with-user=trafficserver --with-group=trafficserver \
-  --with-jansson \
-  --with-cjose \
+  --with-jansson=/usr/lib64 \
+  --with-cjose=/usr/lib64 \
   --prefix=%{install_prefix}/%{name}
 make %{?_smp_mflags}
 
@@ -105,7 +104,7 @@ cp $RPM_BUILD_DIR/%{name}-%{version}/rc/trafficserver %{buildroot}/etc/init.d
 mkdir -p $RPM_BUILD_ROOT%{install_prefix}/trafficserver/etc/trafficserver/snapshots
 
 mkdir -p $RPM_BUILD_ROOT/opt/trafficserver/openssl
-cp -r /opt/trafficserver/openssl/lib $RPM_BUILD_ROOT/opt/trafficserver/openssl/lib
+#cp -r /opt/trafficserver/openssl/lib $RPM_BUILD_ROOT/opt/trafficserver/openssl/lib
 
 %clean
 rm -rf $RPM_BUILD_ROOT
