@@ -58,7 +58,7 @@ autoreconf -vfi
 #%setup
 
 %build
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/trafficserver/openssl/lib:/usr/local/lib
 #./configure --prefix=%{install_prefix}/%{name} --with-user=ats --with-group=ats --with-build-number=%{release} --enable-experimental-plugins --with-jansson=/jansson --with-cjose=/cjose -with-openssl=/opt/trafficserver/openssl --disable-unwind
 chmod +x ./configure
 %configure \
