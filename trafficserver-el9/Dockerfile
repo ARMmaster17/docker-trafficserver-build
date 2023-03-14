@@ -2,7 +2,7 @@
 FROM rockylinux:9.1
 
 RUN dnf -y install dnf-plugins-core && yum clean all
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 RUN dnf install -y --setopt=tsflags=nodocs \
                 git autoconf automake libtool gcc gcc-c++ \
                 pkgconfig pcre-devel tcl-devel expat-devel openssl-devel \
