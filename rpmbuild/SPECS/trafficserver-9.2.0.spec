@@ -9,6 +9,7 @@ License:	Apache License, Version 2.0
 URL:		https://github.com/apache/trafficserver
 Epoch:          13890
 Source0:        %{name}-%{version}-%{epoch}.tar.bz2
+%undefine _disable_source_fetch
 #Source1:        trafficserver.service
 Source2:        trafficserver.sysconfig
 Source3:        trafficserver.tmpfilesd
@@ -158,7 +159,7 @@ fi
 %files
 %defattr(-,root,root)
 #%attr(755,-,-) /etc/init.d/trafficserver
-%dir opt/trafficserver
+%dir /opt/trafficserver
 %if %{?fedora}0 > 140 || %{?rhel}0 > 60
 /usr/lib/systemd/system/trafficserver.service
 %config(noreplace) %{_sysconfdir}/tmpfiles.d/trafficserver.conf
