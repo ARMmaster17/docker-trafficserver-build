@@ -65,7 +65,7 @@ WORKDIR ..
 RUN git clone https://github.com/cisco/cjose.git
 WORKDIR cjose
 RUN autoreconf -i
-RUN ./configure --with-jansson=/jansson --disable-shared CC="gcc -fpic"
+RUN ./configure --with-jansson=/jansson --disable-shared --with-openssl=/opt/trafficserver/openssl CC="gcc -fpic"
 RUN make -j`nproc`
 RUN ln -s src/.libs lib
 
