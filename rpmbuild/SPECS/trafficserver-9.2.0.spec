@@ -107,6 +107,8 @@ mkdir -p $RPM_BUILD_ROOT%{install_prefix}/trafficserver/etc/trafficserver/snapsh
 
 mkdir -p $RPM_BUILD_ROOT/opt/trafficserver/openssl
 #cp -r /opt/trafficserver/openssl/lib $RPM_BUILD_ROOT/opt/trafficserver/openssl/lib
+# TODO: Remove this
+ls -alR
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -169,7 +171,7 @@ fi
 /etc/init.d/trafficserver
 %endif
 /opt/trafficserver/openssl
-/opt/trafficserver/bin
+/etc/trafficserver/bin
 %config(noreplace) %{_sysconfdir}/sysconfig/trafficserver
 %{_sysconfdir}/rsyslog.d/trafficserver.conf
 /usr/include
@@ -184,7 +186,7 @@ fi
 %attr(-,ats,ats) /var/log/trafficserver
 %dir /etc
 %attr(-,ats,ats) %dir /etc/trafficserver
-%attr(-,ats,ats) %dir /etc/trafficserver/snapshots
+%attr(-,ats,ats) %dir /opt/trafficserver/etc/trafficserver/snapshots
 /etc/trafficserver/body_factory
 /etc/trafficserver/trafficserver-release
 %config(noreplace) %attr(644,ats,ats) /etc/trafficserver/cache.config
