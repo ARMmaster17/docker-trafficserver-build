@@ -25,9 +25,10 @@ BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 Requires:	tcl, hwloc, pcre, openssl, libcap
 Requires:       rsyslog
 Requires:       logrotate
+Requires:       libcap, cjose, jansson
 Requires:       expat, hwloc, pcre, xz, ncurses, pkgconfig
 BuildRequires:	autoconf, automake, libtool, gcc-c++, glibc-devel, openssl-devel, expat-devel, pcre, libcap-devel, pcre-devel, perl-ExtUtils-MakeMaker, tcl-devel, hwloc-devel, luajit-devel,
-
+BuildRequires: cjose-devel, jansson-devel
 Requires: initscripts
 %if %{?fedora}0 > 140 || %{?rhel}0 > 60
 # For systemd.macros
@@ -50,7 +51,9 @@ rm -rf %{name}-%{version}
 #%setup -D -n %{name} -T
 %setup
 %patch0 -p1
+%if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
 %patch1 -p0
+%endif
 #%patch2 -p1
 autoreconf -vfi
 
