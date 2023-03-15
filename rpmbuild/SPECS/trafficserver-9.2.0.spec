@@ -64,7 +64,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 #./configure --prefix=%{install_prefix}/%{name} --with-user=ats --with-group=ats --with-build-number=%{release} --enable-experimental-plugins --with-jansson=/jansson --with-cjose=/cjose -with-openssl=/opt/trafficserver/openssl --disable-unwind
 chmod +x ./configure
 %configure \
-  --enable-layout=RedHat \
   --sysconfdir=%{_sysconfdir}/%{name} \
   --libdir=%{_libdir}/%{name} \
   --libexecdir=%{_libdir}/%{name}/plugins \
@@ -107,7 +106,7 @@ cp $RPM_BUILD_DIR/%{name}-%{version}/rc/trafficserver %{buildroot}/etc/init.d
 mkdir -p $RPM_BUILD_ROOT%{install_prefix}/trafficserver/etc/trafficserver/snapshots
 
 mkdir -p $RPM_BUILD_ROOT/opt/trafficserver/openssl
-cp -r /opt/trafficserver/openssl/lib $RPM_BUILD_ROOT/opt/trafficserver/openssl/lib
+#cp -r /opt/trafficserver/openssl/lib $RPM_BUILD_ROOT/opt/trafficserver/openssl/lib
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -173,34 +172,35 @@ fi
 /opt/trafficserver/bin
 %config(noreplace) %{_sysconfdir}/sysconfig/trafficserver
 %{_sysconfdir}/rsyslog.d/trafficserver.conf
+/opt/trafficserver/include
 /usr/include
 /opt/trafficserver/lib
-#/man
-#/lib64
-#libexec
-/usr/share
-%dir /var
-%attr(-,ats,ats) /var/trafficserver
-%dir /var/log
-%attr(-,ats,ats) /var/log/trafficserver
-%dir /etc
-%attr(-,ats,ats) %dir /etc/trafficserver
-%attr(-,ats,ats) %dir /etc/trafficserver/snapshots
-/etc/trafficserver/body_factory
-/etc/trafficserver/trafficserver-release
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/cache.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/hosting.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/ip_allow.yaml
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/logging.yaml
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/parent.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/plugin.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/records.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/remap.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/socks.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/splitdns.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/ssl_multicert.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/storage.config
-##%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/update.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/volume.config
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/sni.yaml
-%config(noreplace) %attr(644,ats,ats) /etc/trafficserver/strategies.yaml
+#/opt/trafficserver/man
+#/opt/trafficserver/lib64
+/opt/trafficserver/libexec
+/opt/trafficserver/share
+%dir /opt/trafficserver/var
+%attr(-,ats,ats) /opt/trafficserver/var/trafficserver
+%dir /opt/trafficserver/var/log
+%attr(-,ats,ats) /opt/trafficserver/var/log/trafficserver
+%dir /opt/trafficserver/etc
+%attr(-,ats,ats) %dir /opt/trafficserver/etc/trafficserver
+%attr(-,ats,ats) %dir /opt/trafficserver/etc/trafficserver/snapshots
+/opt/trafficserver/etc/trafficserver/body_factory
+/opt/trafficserver/etc/trafficserver/trafficserver-release
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/cache.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/hosting.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/ip_allow.yaml
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/logging.yaml
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/parent.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/plugin.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/records.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/remap.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/socks.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/splitdns.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/ssl_multicert.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/storage.config
+#%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/update.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/volume.config
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/sni.yaml
+%config(noreplace) %attr(644,ats,ats) /opt/trafficserver/etc/trafficserver/strategies.yaml
