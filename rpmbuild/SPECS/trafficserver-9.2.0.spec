@@ -14,11 +14,11 @@ Source0:        %{name}-%{version}-%{epoch}.tar.bz2
 Source2:        trafficserver.sysconfig
 Source3:        trafficserver.tmpfilesd
 Source4:        trafficserver-rsyslog.conf
+Patch0:         astats_over_http-1.6-9.1.x.patch
 # Use Crypto Policies where supported
 %if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
-Patch0:         trafficserver-crypto-policy.patch
+Patch1:         trafficserver-crypto-policy.patch
 %endif
-Patch1:         astats_over_http-1.6-9.1.x.patch
 #Patch1:         7916.patch
 #Patch2:         8589.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
@@ -49,8 +49,8 @@ rm -rf %{name}-%{version}
 
 #%setup -D -n %{name} -T
 %setup
-%patch0 -p0
-%patch1 -p1
+%patch0 -p1
+%patch1 -p0
 #%patch2 -p1
 autoreconf -vfi
 
