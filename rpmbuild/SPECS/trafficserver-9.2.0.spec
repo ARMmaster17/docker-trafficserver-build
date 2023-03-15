@@ -28,7 +28,9 @@ Requires:       logrotate
 Requires:       libcap, cjose, jansson
 Requires:       expat, hwloc, pcre, xz, ncurses, pkgconfig
 BuildRequires:	autoconf, automake, libtool, gcc-c++, glibc-devel, openssl-devel, expat-devel, pcre, libcap-devel, pcre-devel, perl-ExtUtils-MakeMaker, tcl-devel, hwloc-devel, luajit-devel,
+%if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
 BuildRequires: cjose-devel, jansson-devel
+%endif
 Requires: initscripts
 %if %{?fedora}0 > 140 || %{?rhel}0 > 60
 # For systemd.macros
@@ -58,7 +60,7 @@ rm -rf %{name}-%{version}
 autoreconf -vfi
 
 %build
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/trafficserver/openssl/lib:/usr/local/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 #./configure --prefix=%{install_prefix}/%{name} --with-user=ats --with-group=ats --with-build-number=%{release} --enable-experimental-plugins --with-jansson=/jansson --with-cjose=/cjose -with-openssl=/opt/trafficserver/openssl --disable-unwind
 chmod +x ./configure
 %configure \
@@ -67,8 +69,6 @@ chmod +x ./configure
   --libdir=%{_libdir}/%{name} \
   --libexecdir=%{_libdir}/%{name}/plugins \
   --enable-experimental-plugins \
-  --with-jansson=/usr/lib64 \
-  --with-cjose=/usr/lib64 \
   --prefix=%{install_prefix}/%{name} \
   --with-user=ats --with-group=ats \
   --with-build-number=%{release} \

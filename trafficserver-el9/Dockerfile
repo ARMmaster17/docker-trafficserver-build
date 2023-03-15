@@ -44,16 +44,6 @@ RUN useradd builder -u 1000 -m -G users,wheel && \
     #mkdir /home/builder/rpm && \
     chown -R builder /home/builder
 
-RUN mkdir -p /opt/trafficserver/openssl
-WORKDIR /
-RUN wget https://www.openssl.org/source/openssl-3.1.0.tar.gz
-RUN tar xvfz openssl-3.1.0.tar.gz
-WORKDIR openssl-3.1.0
-RUN ./config --prefix=/opt/trafficserver/openssl --openssldir=/opt/trafficserver/openssl zlib
-RUN make -j`nproc`
-RUN make install_sw
-WORKDIR ..
-
 USER builder
 
 WORKDIR /home/builder/rpmbuild
