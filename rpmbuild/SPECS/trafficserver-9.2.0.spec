@@ -108,7 +108,9 @@ mkdir -p $RPM_BUILD_ROOT%{install_prefix}/trafficserver/etc/trafficserver/snapsh
 mkdir -p $RPM_BUILD_ROOT/opt/trafficserver/openssl
 #cp -r /opt/trafficserver/openssl/lib $RPM_BUILD_ROOT/opt/trafficserver/openssl/lib
 # TODO: Remove this
-ls -alR
+echo "STARTTAG"
+ls -alR %{buildroot}
+echo "ENDTAG"
 
 %clean
 rm -rf $RPM_BUILD_ROOT
