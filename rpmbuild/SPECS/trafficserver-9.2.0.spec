@@ -173,8 +173,14 @@ fi
 /etc/init.d/trafficserver
 %endif
 /opt/trafficserver/openssl
-#TODO: re-enable this
-#/etc/trafficserver/bin
+%if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
+/usr/bin/*
+/usr/lib/debug/usr/bin/*
+/usr/lib/debug/usr/lib64/trafficserver
+/usr/lib64/trafficserver
+%else
+/etc/trafficserver/bin
+%endif
 %config(noreplace) %{_sysconfdir}/sysconfig/trafficserver
 %{_sysconfdir}/rsyslog.d/trafficserver.conf
 /usr/include
