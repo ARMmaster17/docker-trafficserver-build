@@ -173,7 +173,8 @@ fi
 /etc/init.d/trafficserver
 %endif
 /opt/trafficserver/openssl
-/etc/trafficserver/bin
+#TODO: re-enable this
+#/etc/trafficserver/bin
 %config(noreplace) %{_sysconfdir}/sysconfig/trafficserver
 %{_sysconfdir}/rsyslog.d/trafficserver.conf
 /usr/include
