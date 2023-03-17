@@ -14,11 +14,7 @@ Source0:        %{name}-%{version}-%{epoch}.tar.bz2
 Source2:        trafficserver.sysconfig
 Source3:        trafficserver.tmpfilesd
 Source4:        trafficserver-rsyslog.conf
-Patch0:         astats_over_http-1.6-9.1.x.patch
-# Use Crypto Policies where supported
-%if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
-Patch1:         trafficserver-crypto-policy.patch
-%endif
+Patch0:         trafficserver-crypto-policy.patch
 #Patch1:         7916.patch
 #Patch2:         8589.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
@@ -27,7 +23,7 @@ Requires:       rsyslog
 Requires:       logrotate
 Requires:       libcap, cjose, jansson
 Requires:       expat, hwloc, pcre, xz, ncurses, pkgconfig
-BuildRequires:	autoconf, automake, libtool, gcc-c++, glibc-devel, openssl-devel, expat-devel, pcre, libcap-devel, pcre-devel, perl-ExtUtils-MakeMaker, tcl-devel, hwloc-devel, luajit-devel,
+BuildRequires:	autoconf, automake, libtool, gcc-c++, glibc-devel, openssl-devel, expat-devel, pcre, libcap-devel, pcre-devel, hwloc-devel, luajit-devel,
 %if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
 BuildRequires: cjose-devel, jansson-devel
 %endif
@@ -51,7 +47,7 @@ rm -rf %{name}-%{version}
 #git clone -b %{version} https://github.com/apache/trafficserver.git %{name}-%{version}
 
 #%setup -D -n %{name} -T
-%setup
+%autosetup
 %patch0 -p1
 %if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
 %patch1 -p0
@@ -91,26 +87,17 @@ install -m 644 -p %{SOURCE4} \
 
 #%{__install} -Dm 0644 trafficserver-rsyslog.conf $RPM_BUILD_ROOT/etc/rsyslog.d/trafficserver.conf
 
-%if %{?fedora}0 > 140 || %{?rhel}0 > 60
 #install -D -m 0644 -p %{SOURCE1} \
 #   %{buildroot}/lib/systemd/system/trafficserver.service
 mkdir -p %{buildroot}%{_unitdir}/
 cp $RPM_BUILD_DIR/%{name}-%{version}/rc/trafficserver.service %{buildroot}%{_unitdir}/
 install -D -m 0644 -p %{SOURCE3} \
    %{buildroot}%{_sysconfdir}/tmpfiles.d/trafficserver.conf
-%else
-mkdir -p %{buildroot}/etc/init.d/
-cp $RPM_BUILD_DIR/%{name}-%{version}/rc/trafficserver %{buildroot}/etc/init.d
-%endif
 
 mkdir -p $RPM_BUILD_ROOT%{install_prefix}/trafficserver/etc/trafficserver/snapshots
 
 mkdir -p $RPM_BUILD_ROOT/opt/trafficserver/openssl
 #cp -r /opt/trafficserver/openssl/lib $RPM_BUILD_ROOT/opt/trafficserver/openssl/lib
-# TODO: Remove this
-echo "STARTTAG"
-ls -alR %{buildroot}
-echo "ENDTAG"
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -137,7 +124,6 @@ id ats &>/dev/null || /usr/sbin/useradd -u 176 -r ats -s /sbin/nologin -d /
 %endif
 
 %preun
-#/etc/init.d/%{name} stop
 %if %{?fedora}0 > 170 || %{?rhel}0 > 60
   %systemd_preun trafficserver.service
 %else
@@ -164,14 +150,9 @@ fi
 
 %files
 %defattr(-,root,root)
-#%attr(755,-,-) /etc/init.d/trafficserver
 %dir /opt/trafficserver
-%if %{?fedora}0 > 140 || %{?rhel}0 > 60
 /usr/lib/systemd/system/trafficserver.service
 %config(noreplace) %{_sysconfdir}/tmpfiles.d/trafficserver.conf
-%else
-/etc/init.d/trafficserver
-%endif
 /opt/trafficserver/openssl
 %if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
 /usr/bin/*
@@ -185,9 +166,6 @@ fi
 %{_sysconfdir}/rsyslog.d/trafficserver.conf
 /usr/include
 /opt/trafficserver/lib
-#/man
-#/lib64
-#libexec
 /usr/share
 %dir /var
 %attr(-,ats,ats) /var/trafficserver
