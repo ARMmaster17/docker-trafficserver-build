@@ -15,8 +15,6 @@ Source2:        trafficserver.sysconfig
 Source3:        trafficserver.tmpfilesd
 Source4:        trafficserver-rsyslog.conf
 Patch0:         trafficserver-crypto-policy.patch
-#Patch1:         7916.patch
-#Patch2:         8589.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 Requires:	tcl, hwloc, pcre, openssl, libcap
 Requires:       rsyslog
@@ -44,15 +42,13 @@ Apache Traffic Server for Traffic Control with astats_over_http plugin
 
 %prep
 rm -rf %{name}-%{version}
-#git clone -b %{version} https://github.com/apache/trafficserver.git %{name}-%{version}
 
-#%setup -D -n %{name} -T
-%autosetup
+%setup
+%patch0 -p0
 autoreconf -vfi
 
 %build
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-#./configure --prefix=%{install_prefix}/%{name} --with-user=ats --with-group=ats --with-build-number=%{release} --enable-experimental-plugins --with-jansson=/jansson --with-cjose=/cjose -with-openssl=/opt/trafficserver/openssl --disable-unwind
 chmod +x ./configure
 %configure \
   --sysconfdir=%{_sysconfdir}/%{name} \
@@ -69,9 +65,6 @@ make -S %{?_smp_mflags}
 rm -rf %{buildroot}
 make -S DESTDIR=%{buildroot} install
 
-# Remove duplicate man-pages:
-##rm -rf %{buildroot}%{_docdir}/trafficserver
-
 mkdir -p %{buildroot}%{_sysconfdir}/sysconfig
 install -m 644 -p %{SOURCE2} \
    %{buildroot}%{_sysconfdir}/sysconfig/trafficserver
@@ -79,8 +72,6 @@ install -m 644 -p %{SOURCE2} \
 mkdir -p %{buildroot}%{_sysconfdir}/rsyslog.d
 install -m 644 -p %{SOURCE4} \
    %{buildroot}%{_sysconfdir}/rsyslog.d/trafficserver.conf
-
-#%{__install} -Dm 0644 trafficserver-rsyslog.conf $RPM_BUILD_ROOT/etc/rsyslog.d/trafficserver.conf
 
 #install -D -m 0644 -p %{SOURCE1} \
 #   %{buildroot}/lib/systemd/system/trafficserver.service
@@ -92,7 +83,6 @@ install -D -m 0644 -p %{SOURCE3} \
 mkdir -p $RPM_BUILD_ROOT%{install_prefix}/trafficserver/etc/trafficserver/snapshots
 
 mkdir -p $RPM_BUILD_ROOT/opt/trafficserver/openssl
-#cp -r /opt/trafficserver/openssl/lib $RPM_BUILD_ROOT/opt/trafficserver/openssl/lib
 
 %clean
 rm -rf $RPM_BUILD_ROOT
