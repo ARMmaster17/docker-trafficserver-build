@@ -48,11 +48,6 @@ rm -rf %{name}-%{version}
 
 #%setup -D -n %{name} -T
 %autosetup
-%patch0 -p1
-%if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
-%patch1 -p0
-%endif
-#%patch2 -p1
 autoreconf -vfi
 
 %build
