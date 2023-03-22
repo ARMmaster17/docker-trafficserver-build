@@ -51,9 +51,6 @@ autoreconf -vfi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 chmod +x ./configure
 %configure \
-  --sysconfdir=%{_sysconfdir}/%{name} \
-  --libdir=%{_libdir}/%{name} \
-  --libexecdir=%{_libdir}/%{name}/plugins \
   --enable-experimental-plugins \
   --prefix=%{install_prefix}/%{name} \
   --with-user=ats --with-group=ats \
