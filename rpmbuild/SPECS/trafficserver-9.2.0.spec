@@ -2,7 +2,7 @@
 
 Name:		trafficserver
 Version:	9.2.0
-Release:	13890%{?dist}
+Release:	%{getenv:TS_EPOCH}%{?dist}
 Summary:	Apache Traffic Server
 Group:		Applications/Communications
 License:	Apache License, Version 2.0
