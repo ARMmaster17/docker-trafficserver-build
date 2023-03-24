@@ -43,8 +43,7 @@ Apache Traffic Server for Traffic Control with astats_over_http plugin
 %prep
 rm -rf %{name}-%{version}
 
-%setup
-%patch0 -p0
+%autosetup -p0
 autoreconf -vfi
 
 %build
@@ -56,11 +55,12 @@ chmod +x ./configure
   --with-user=ats --with-group=ats \
   --with-build-number=%{release} \
   --disable-unwind
-make -S %{?_smp_mflags}
+%make_build
+make %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
-make -S DESTDIR=%{buildroot} install
+make DESTDIR=%{buildroot} install
 
 mkdir -p %{buildroot}%{_sysconfdir}/sysconfig
 install -m 644 -p %{SOURCE2} \
