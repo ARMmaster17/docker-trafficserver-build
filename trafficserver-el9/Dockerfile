@@ -1,5 +1,5 @@
 #FROM centos:latest
-FROM rockylinux:9.1
+FROM rockylinux:9
 
 RUN dnf -y install dnf-plugins-core && yum clean all
 RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
