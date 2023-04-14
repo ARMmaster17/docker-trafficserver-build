@@ -49,13 +49,12 @@ autoreconf -vfi
 %build
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 chmod +x ./configure
-%configure \
+./configure \
   --enable-experimental-plugins \
   --prefix=%{install_prefix}/%{name} \
   --with-user=ats --with-group=ats \
   --with-build-number=%{release} \
   --disable-unwind
-%make_build
 make %{?_smp_mflags}
 
 %install
