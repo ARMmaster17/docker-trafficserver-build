@@ -132,14 +132,7 @@ fi
 %dir /opt/trafficserver
 /usr/lib/systemd/system/trafficserver.service
 %config(noreplace) %{_sysconfdir}/tmpfiles.d/trafficserver.conf
-%if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
-/usr/bin/*
-/usr/lib/debug/usr/bin/*
-/usr/lib/debug/usr/lib64/trafficserver
-/usr/lib64/trafficserver
-%else
 /opt/trafficserver/bin
-%endif
 %config(noreplace) %{_sysconfdir}/sysconfig/trafficserver
 %{_sysconfdir}/rsyslog.d/trafficserver.conf
 /opt/trafficserver/include
