@@ -43,8 +43,10 @@ Apache Traffic Server for Traffic Control with astats_over_http plugin
 
 %prep
 rm -rf %{name}-%{version}
-
-%autosetup -p0
+#%autosetup -p0
+%setup -q
+%patch 0 -p0
+%patch 1 -p1
 autoreconf -vfi
 
 %build
