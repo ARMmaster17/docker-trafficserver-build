@@ -15,7 +15,7 @@ Source2:        trafficserver.sysconfig
 Source3:        trafficserver.tmpfilesd
 Source4:        trafficserver-rsyslog.conf
 Patch0:         trafficserver-crypto-policy.patch
-Patch1:		https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/9579.diff
+#Patch1:		https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/9579.diff
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 Requires:	tcl, hwloc, pcre, openssl, libcap
 Requires:       rsyslog
@@ -43,10 +43,7 @@ Apache Traffic Server for Traffic Control with astats_over_http plugin
 
 %prep
 rm -rf %{name}-%{version}
-#%autosetup -p0
-%setup -q
-%patch0 -p0
-%patch1 -p1
+%autosetup -p0
 autoreconf -vfi
 
 %build
