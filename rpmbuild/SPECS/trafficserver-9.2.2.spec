@@ -12,7 +12,7 @@ Source0:        %{name}-%{version}-%{epoch}.tar.bz2
 %undefine _disable_source_fetch
 #Source1:        trafficserver.service
 Source2:        trafficserver.sysconfig
-Source3:        trafficserver.tmpfilesd
+Source3:        trafficserver.tmpfilesd.el9
 Source4:        trafficserver-rsyslog.conf
 Patch0:         trafficserver-crypto-policy.patch
 #Patch1:		https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/9579.diff
