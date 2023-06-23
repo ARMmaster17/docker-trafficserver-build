@@ -15,8 +15,7 @@ Source2:        trafficserver.sysconfig
 Source3:        trafficserver.tmpfilesd.el9
 Source4:        trafficserver-rsyslog.conf
 Patch0:         trafficserver-crypto-policy.patch
-Patch1:         https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/9330.patch
-Patch2:         https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/9333.patch
+#Patch1:		https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/9579.diff
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 Requires:	tcl, hwloc, pcre, openssl, libcap
 Requires:       rsyslog
