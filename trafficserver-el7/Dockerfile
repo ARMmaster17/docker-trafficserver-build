@@ -7,7 +7,7 @@ RUN yum install -y --setopt=tsflags=nodocs \
                 libcap libcap-devel hwloc hwloc-devel libcurl-devel rpm-build perl-ExtUtils-MakeMaker \
                 make centos-release-scl sudo epel-release wget \
                 && yum clean all
-RUN yum install -y --setopts=tsflags=nodocs install openssl11 openssl11-devel
+RUN yum install -y openssl11 openssl11-devel
 
 # Default version of GCC and Python
 RUN gcc --version && python --version
