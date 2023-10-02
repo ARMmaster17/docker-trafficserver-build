@@ -17,12 +17,22 @@ Source4:        trafficserver-rsyslog.conf
 Patch0:         trafficserver-crypto-policy.patch
 #Patch1:		https://patch-diff.githubusercontent.com/raw/apache/trafficserver/pull/9579.diff
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-Requires:	tcl, hwloc, pcre, openssl, libcap
+Requires:	tcl, hwloc, pcre, libcap
+%if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
+Requires:	openssl
+%else
+Requires:	openssl11
+%endif
 Requires:       rsyslog
 Requires:       logrotate
 Requires:       libcap, cjose, jansson
 Requires:       expat, hwloc, pcre, xz, ncurses, pkgconfig
-BuildRequires:	autoconf, automake, libtool, gcc-c++, glibc-devel, openssl-devel, expat-devel, pcre, libcap-devel, pcre-devel, hwloc-devel, luajit-devel,
+BuildRequires:	autoconf, automake, libtool, gcc-c++, glibc-devel,expat-devel, pcre, libcap-devel, pcre-devel, hwloc-devel, luajit-devel
+%if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
+BuildRequires:	openssl-devel
+%else
+BuildRequires:	openssl11-devel
+%endif
 %if 0%{?fedora} >= 21 || 0%{?rhel} >= 8
 BuildRequires: cjose-devel, jansson-devel
 %endif
