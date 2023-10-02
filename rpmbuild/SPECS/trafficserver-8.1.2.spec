@@ -15,10 +15,10 @@ Source3:        trafficserver.tmpfilesd
 Source4:        trafficserver-rsyslog.conf
 Patch:          astats_over_http-1.5-8.1.x.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-Requires:	tcl, hwloc, pcre, openssl, libcap
+Requires:	tcl, hwloc, pcre, openssl11, libcap
 Requires:       rsyslog
 Requires:       logrotate
-BuildRequires:	autoconf, automake, libtool, gcc-c++, glibc-devel, openssl-devel, expat-devel, pcre, libcap-devel, pcre-devel, perl-ExtUtils-MakeMaker, tcl-devel, hwloc-devel, luajit-devel
+BuildRequires:	autoconf, automake, libtool, gcc-c++, glibc-devel, openssl11-devel, expat-devel, pcre, libcap-devel, pcre-devel, perl-ExtUtils-MakeMaker, tcl-devel, hwloc-devel, luajit-devel
 
 Requires: initscripts
 %if %{?fedora}0 > 140 || %{?rhel}0 > 60
